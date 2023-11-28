@@ -17,6 +17,8 @@ class Health extends StatefulWidget {
 }
 
 class _HealthState extends State<Health> {
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -30,6 +32,7 @@ class _HealthState extends State<Health> {
         //     IconButton(icon: Icon(Icons.people_rounded), onPressed: () {})
         //   ],
         // ),
+        key: _scaffoldKey,
         body: Stack(
           fit: StackFit.expand,
           children: [
@@ -49,7 +52,7 @@ class _HealthState extends State<Health> {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     SizedBox(
-                      height: 140,
+                      height: 115,
                     ),
                     Text(
                       '3',
@@ -60,7 +63,7 @@ class _HealthState extends State<Health> {
                       ),
                     ),
                     SizedBox(
-                      height: 30,
+                      height: 27,
                     ),
                     Text(
                       '5000',
@@ -82,19 +85,21 @@ class _HealthState extends State<Health> {
                     children: [
                       _buildTopbarImageButton(
                         'src/img/menu.png',
-                        () {
-                          //클릭시
+                            () {
+                          _scaffoldKey.currentState?.openDrawer();
                         },
-                        40, // 너비
-                        40, // 높이
+                        40,
+                        40,
+                        20,
                       ),
                       _buildTopbarImageButton(
                         'src/img/prf.png',
-                        () {
-                          //클릭시
+                            () {
+                          // Handle profile button tap
                         },
-                        45, // 너비
-                        45, // 높이
+                        45,
+                        45,
+                        20,
                       ),
                     ],
                   ),
@@ -169,6 +174,65 @@ class _HealthState extends State<Health> {
             ),
           ],
         ),
+        drawer: Drawer(
+          backgroundColor: myColors[PRIMARY],
+          width: 200,
+          child: ListView(
+            padding: EdgeInsets.zero,
+            children: <Widget>[
+              Container(
+                padding: EdgeInsets.symmetric(horizontal: 16),
+                height: 100,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    _buildTopbarImageButton(
+                      'src/img/menu.png',
+                          () {
+                        _scaffoldKey.currentState?.openDrawer();
+                      },
+                      40,
+                      40,
+                      0,
+                    ),
+                  ],
+                ),
+              ),
+              ListTile(
+                title: Text('•Home'),
+                onTap: (){}
+              ),
+              ListTile(
+                leading: Icon(Icons.person),
+                title: Text('Profile'),
+                  onTap: (){}
+              ),
+              ListTile(
+                leading: Icon(Icons.phone),
+                title: Text('Phone'),
+                  onTap: (){}
+              ),
+              ListTile(
+                leading: Icon(Icons.settings),
+                title: Text('Settings'),
+                  onTap: (){}
+              ),
+              Divider(height: 1,),
+              ListTile(
+                leading: Icon(Icons.exit_to_app),
+                title: Text('Logout'),
+                  onTap: (){}
+              ),
+
+
+
+
+            ],
+
+
+
+          ),
+        ),
       ),
     );
   }
@@ -193,13 +257,13 @@ class _HealthState extends State<Health> {
   }
 
   Widget _buildTopbarImageButton(
-      String imagePath, Function() onTap, double width, double height) {
+      String imagePath, Function() onTap, double width, double height, double left) {
     return GestureDetector(
       onTap: onTap,
       child: Container(
         width: width,
         height: height,
-        margin: EdgeInsets.only(top: 7, left: 20, right: 20),
+        margin: EdgeInsets.only(top: 7, left: left, right: 20),
         padding: EdgeInsets.all(12),
         decoration: BoxDecoration(
           image: DecorationImage(
