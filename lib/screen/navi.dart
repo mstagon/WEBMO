@@ -119,8 +119,8 @@ class _RootScreenState extends State<RootScreen> with TickerProviderStateMixin{ 
     return [
       Home(),
       Diary(),
-      Calendar(),
-      Chat(),
+      // Calendar(),
+      // Chat(),
       Health()
     ];
   }
